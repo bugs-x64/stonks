@@ -13,7 +13,7 @@
 
 ```bash
 curl -X 'POST' \
-  'https://localhost:5001/api/Tools/FillData' \
+  'http://localhost:5000/api/Tools/FillData' \
   -H 'accept: */*' \
   -d ''
 ```

@@ -38,7 +38,7 @@ namespace StonksWebApi
                 });
             services.AddSwaggerGen(c =>
             {
-                var basePath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName);
+                var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
                 var XmlCommentsPath = Path.Combine(basePath!, fileName);
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "StonksWebApi", Version = "v1"});
@@ -84,12 +84,13 @@ namespace StonksWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "StonksWebApi v1"); });
-            }
+            // if (env.IsDevelopment())
+            // {
+            //генерим сваггер в любом случае
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "StonksWebApi v1"); });
+            // }
 
             app.UseHttpsRedirection();
 

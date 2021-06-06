@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  stonks-api:
+    container_name: stonks-api
+    restart: always
+    build: ./
+    ports:
+      - "5000:80"

@@ -12,6 +12,7 @@ namespace StonksWebApi.Controllers
     public class TickersController : ControllerBase
     {
         private readonly TickersService _service;
+
         public TickersController(TickersService service)
         {
             _service = service;
@@ -22,39 +23,48 @@ namespace StonksWebApi.Controllers
         /// </summary>
         /// <param name="isin"></param>
         [HttpGet("by-isin/{isin}")]
-        public Task<TickerDto> GetTickerByIsinAsync(string isin)
+        public Task<TickerDto> GetTickerByIsinAsync([FromRoute] string isin)
         {
-            
             return _service.GetTickerByIsinAsync(isin);
         }
+
         /// <summary>
         /// получение полной информации об активе по id
         /// </summary>
-        /// <param name="id"></param>
-        [HttpGet("by-id/{id}")]
-        public   Task<TickerDto> GetTickerByIdAsync(string id)
+        /// <param name="ticker"></param>
+        [HttpGet("by-ticker/{ticker}")]
+        public Task<TickerDto> GetTickerByIdAsync([FromRoute] string ticker)
         {
-            
-            return _service. GetTickerByIdAsync( id);
+            return _service.GetTickerByIdAsync(ticker);
         }
 
         /// <summary>
         /// поиск активов
         /// </summary>
-        /// <param name="name">по части названия</param>
-        /// <param name="id">части ticker'а</param>
-        /// <param name="isin">части isin-кода</param>
-        /// <param name="type">Тип актива</param>
-        /*
-    - в параметре запроса не менее 3 символов;
-    - дополнительный необязательный параметр - класс актива (для выборки только по заданному классу);
-    - результаты сгруппированы по классу актива;
-    - только краткая информация.
-         */
         [HttpGet("search")]
-        public   Task<IEnumerable<TickerDto>> SearchAsync(string name, string id, string isin, TickerType[] type)
+        public Task<IEnumerable<TickersService.SearchResultDto>> SearchAsync([FromQuery] SearchDto requestDto)
         {
-            return _service.SearchAsync(name, id, isin, type);
+            return _service.SearchAsync(requestDto.Name, requestDto.Ticker, requestDto.Isin, requestDto.Types);
+        }
+
+        public class SearchDto
+        {
+            /// <summary>
+            /// Поиск по имени актива
+            /// </summary>
+            public string Name { get; set; }
+            /// <summary>
+            /// Поиск по isin
+            /// </summary>
+            public string Isin { get; set; }
+            /// <summary>
+            /// Поиск по id актива
+            /// </summary>
+            public string Ticker { get; set; }
+            /// <summary>
+            /// Типы активов
+            /// </summary>
+            public TickerType[] Types { get; set; }
         }
     }
 }

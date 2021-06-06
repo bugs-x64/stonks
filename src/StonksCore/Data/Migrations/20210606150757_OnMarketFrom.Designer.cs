@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StonksCore.Data;
 
 namespace StonksCore.Migrations
 {
     [DbContext(typeof(StonksDbContext))]
-    partial class StonksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210606150757_OnMarketFrom")]
+    partial class OnMarketFrom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -3,13 +3,13 @@ using StonksCore.Data.Models;
 using StonksCore.Dto;
 using StonksCore.Models;
 
-namespace StonksCore.Services
+namespace StonksCore.Data
 {
     public static class DtoConverter
     {
         public static TickerDto ToDto(this Ticker ticker)
         {
-            return new ()
+            return new()
             {
                 Currency = ticker.Currency,
                 Figi = ticker.Figi,
@@ -18,29 +18,32 @@ namespace StonksCore.Services
                 Name = ticker.Name,
                 Ticker = ticker.TickerName,
                 Type = ticker.Type.ToString(),
-                MinPriceIncrement = ticker.MinPriceIncrement
+                MinPriceIncrement = ticker.MinPriceIncrement,
+                IssuerId = ticker.IssuerId,
+                OnMarketFrom = ticker.OnMarketFrom
             };
         }
-        
+
         public static Ticker FromDto(this TickerDto ticker)
         {
-            return new ()
+            return new()
             {
                 Currency = ticker.Currency,
                 Figi = ticker.Figi,
                 Isin = ticker.Isin,
                 Lot = ticker.Lot,
                 Name = ticker.Name,
-                TickerName = ticker.Ticker,
+                TickerName = ticker.Ticker.ToIndexName(),
                 Type = FromString(ticker.Type),
                 MinPriceIncrement = ticker.MinPriceIncrement,
-                IssuerId = ticker.IssuerId
+                IssuerId = ticker.IssuerId,
+                OnMarketFrom = ticker.OnMarketFrom
             };
         }
-        
+
         public static IssuerDto ToDto(this Issuer issuer)
         {
-            return new ()
+            return new()
             {
                 Id = issuer.Id,
                 Name = issuer.Name
@@ -60,15 +63,15 @@ namespace StonksCore.Services
 
         public static Issuer FromDto(this IssuerDto issuer)
         {
-            return new ()
+            return new()
             {
                 Id = issuer.Id,
                 Name = issuer.Name,
-                IndexName = ToIndexName(issuer.Name)
+                IndexName = issuer.Name.ToIndexName()
             };
         }
 
-        public static string ToIndexName(string name) => 
-            name.ToLower().Replace(" ", "");
+        public static string ToIndexName(this string name) =>
+            name?.ToUpperInvariant().Replace(" ", "");
     }
 }

@@ -1,25 +1,36 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace StonksCore.Dto
 {
     public class TickerDto
     {
-        [JsonProperty("figi")]
+        [JsonProperty("figi")] 
         public string Figi { get; set; }
-        [JsonProperty("ticker")]
+
+        [JsonProperty("ticker")] 
         public string Ticker { get; set; }
-        [JsonProperty("isin")]
+
+        [JsonProperty("isin")] 
         public string Isin { get; set; }
-        [JsonProperty("minPriceIncrement")]
+
+        [JsonProperty("minPriceIncrement")] 
         public double MinPriceIncrement { get; set; }
-        [JsonProperty("lot")]
+
+        [JsonProperty("lot")] 
         public int Lot { get; set; }
-        [JsonProperty("currency")]
+
+        [JsonProperty("currency")] 
         public string Currency { get; set; }
-        [JsonProperty("name")]
+
+        [JsonProperty("name")] 
         public string Name { get; set; }
-        [JsonProperty("type")]
+
+        [JsonProperty("type")] 
         public string Type { get; set; }
+
+        [JsonProperty("onmarketfrom")]
+        public DateTime OnMarketFrom { get; set; }
 
         public int IssuerId { get; set; }
     }

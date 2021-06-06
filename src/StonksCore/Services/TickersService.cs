@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using StonksCore.Data.Repository;
 using StonksCore.Dto;
 using StonksCore.Models;
 
@@ -7,19 +10,52 @@ namespace StonksCore.Services
 {
     public class TickersService
     {
-        public Task<TickerDto> GetTickerByIsinAsync(string isin)
+        private readonly TickersRepository _tickersRepository;
+
+        public TickersService(TickersRepository tickersRepository)
         {
-            throw new System.NotImplementedException();
+            _tickersRepository = tickersRepository;
         }
 
-        public Task<TickerDto> GetTickerByIdAsync(string id)
+        public async Task<TickerDto> GetTickerByIsinAsync(string isin)
         {
-            throw new System.NotImplementedException();
+            if (!IsValidParameter(isin))
+                throw new Exception("Укажите параметры поиска");
+            return await _tickersRepository.GetTickerByIsinAsync(isin);
         }
 
-        public Task<IEnumerable<TickerDto>> SearchAsync(string name, string id, string isin, TickerType[] type)
+        public async Task<TickerDto> GetTickerByIdAsync(string tickerName)
         {
-            throw new System.NotImplementedException();
+            if (!IsValidParameter(tickerName))
+                throw new Exception("Укажите параметры поиска");
+            return await _tickersRepository.GetTickerByIdAsync(tickerName);
+        }
+
+        public async Task<IEnumerable<SearchResultDto>> SearchAsync(string name, string ticker, string isin, TickerType[] types)
+        {
+            if (IsValidParameter(name) && IsValidParameter(ticker) && IsValidParameter(isin))
+                throw new Exception("Укажите параметры поиска");
+
+            if (types is null || !types.Any())
+                types = Enum.GetValues<TickerType>();
+            var tickerDtos = await _tickersRepository.SearchAsync(name, ticker, isin, types);
+
+            return tickerDtos.GroupBy(x => x.Type, ((type, tickers) => new SearchResultDto()
+            {
+                Type = type,
+                Tickers = tickers.ToArray()
+            }));
+        }
+
+        public class SearchResultDto
+        {
+            public string Type { get; set; }
+            public TickerDto[] Tickers { get; set; }
+        }
+
+        private static bool IsValidParameter(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) && value.Length > 3;
         }
     }
 }

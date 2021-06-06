@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using StonksCore.Dto;
-using StonksCore.Services;
 
 namespace StonksCore.Data.Repository
 {
@@ -15,24 +15,33 @@ namespace StonksCore.Data.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<IssuerDto>> GetAllIssuers()
+        public async Task<IEnumerable<IssuerDto>> GetAllIssuersAsync()
         {
-            throw new System.NotImplementedException();
+            var tickers = await _context.Issuers.ToArrayAsync();
+
+            return tickers.Select(x => x.ToDto());
         }
 
-        public async Task<IssuerDto> AddIssuer(IssuerDto issuerDto)
+        public async Task<IssuerDto> AddIssuerAsync(IssuerDto issuerDto)
         {
             var issuer = issuerDto.FromDto();
             await _context.Issuers.AddAsync(issuer);
-
             await _context.SaveChangesAsync();
             return issuer.ToDto();
         }
 
-        public async Task<IssuerDto> GetIssuer(string name)
+        public async Task<IssuerDto> GetIssuerAsync(string name)
         {
-            var indexName = DtoConverter.ToIndexName(name);
-            var issuer = await _context.Issuers.FirstOrDefaultAsync(x => x.IndexName == indexName);
+            var issuer = await _context.Issuers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.IndexName == name.ToIndexName());
+            return issuer?.ToDto();
+        }
+        public async Task<IssuerDto> GetIssuerAsync(int id)
+        {
+            var issuer = await _context.Issuers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
             return issuer?.ToDto();
         }
     }

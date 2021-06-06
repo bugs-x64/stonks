@@ -16,7 +16,7 @@ namespace StonksWebApi.Controllers
         {
             _service = service;
         }
-        
+
         /// <summary>
         /// получение перечня всех эмитентов
         /// </summary>
@@ -25,11 +25,11 @@ namespace StonksWebApi.Controllers
         {
             return _service.GetAllIssuersAsync();
         }
-        
+
         /// <summary>
         /// получение перечня всех активов эмитента по его id
         /// </summary>
-        /// <param name="id">id эмитента</param>
+        /// <param name="issuerId">id эмитента</param>
         /// <remarks>
         /// - единый перечень
         /// - без группировки
@@ -37,10 +37,10 @@ namespace StonksWebApi.Controllers
         /// - упорядочен по дате начала обращения;
         /// - только краткая информация.
         /// </remarks>
-        [HttpGet("{id}/tickers")]
-        public Task<IEnumerable<TickerDto>> GetIssuersTickersAsync(int id)
+        [HttpGet("{issuerId}/tickers")]
+        public Task<IEnumerable<TickerDto>> GetIssuersTickersAsync(int issuerId)
         {
-            return _service.GetIssuersTickersAsync(id);
+            return _service.GetIssuersTickersAsync(issuerId);
         }
     }
 }

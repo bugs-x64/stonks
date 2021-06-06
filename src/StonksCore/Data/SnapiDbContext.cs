@@ -9,6 +9,10 @@ namespace StonksCore.Data
     /// </summary>
     public class StonksDbContext : DbContext
     {
+        public StonksDbContext(DbContextOptions<StonksDbContext> context) : base(context)
+        {
+        }
+
         public DbSet<Issuer> Issuers { get; set; }
         public DbSet<Ticker> Tickers { get; set; }
 
@@ -25,10 +29,6 @@ namespace StonksCore.Data
             builder.EnableSensitiveDataLogging();
             builder.LogTo(Console.WriteLine);
             return builder;
-        }
-
-        public StonksDbContext(DbContextOptions<StonksDbContext> context) : base(context)
-        {
         }
 
 

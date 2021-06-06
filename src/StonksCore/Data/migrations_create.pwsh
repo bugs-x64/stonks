@@ -1,0 +1,1 @@
+﻿dotnet ef migrations add Initial -p StonksCore/StonksCore.csproj -s StonksWebApi/StonksWebApi.csproj --context StonksCore.Data.StonksDbContext

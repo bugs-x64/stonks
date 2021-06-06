@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StonksWebApi", "StonksWebApi\StonksWebApi.csproj", "{5A2EFB59-586F-48F2-A228-9D73D524A442}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StonksCore", "StonksCore\StonksCore.csproj", "{FE908461-DB04-41A4-8989-9ECA0DC2BDC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5A2EFB59-586F-48F2-A228-9D73D524A442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A2EFB59-586F-48F2-A228-9D73D524A442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A2EFB59-586F-48F2-A228-9D73D524A442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE908461-DB04-41A4-8989-9ECA0DC2BDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE908461-DB04-41A4-8989-9ECA0DC2BDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE908461-DB04-41A4-8989-9ECA0DC2BDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE908461-DB04-41A4-8989-9ECA0DC2BDC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -11,9 +11,9 @@ namespace StonksWebApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            return CreateHostBuilder(args).RunApplicationAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
